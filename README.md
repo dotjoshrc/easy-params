@@ -1,6 +1,6 @@
-[![Release](https://img.shields.io/github/release/technicallyjosh/easy-params.svg)](https://github.com/technicallyjosh/easy-params/releases/latest)
-[![Build](https://github.com/technicallyjosh/easy-params/workflows/Build/badge.svg)](https://github.com/technicallyjosh/easy-params/actions?query=workflow%3ABuild)
-[![Release](https://github.com/technicallyjosh/easy-params/workflows/Release/badge.svg)](https://github.com/technicallyjosh/easy-params/actions?query=workflow%3ARelease)
+[![Release](https://img.shields.io/github/release/dotjoshrc/easy-params.svg)](https://github.com/dotjoshrc/easy-params/releases/latest)
+[![Build](https://github.com/dotjoshrc/easy-params/workflows/Build/badge.svg)](https://github.com/dotjoshrc/easy-params/actions?query=workflow%3ABuild)
+[![Release](https://github.com/dotjoshrc/easy-params/workflows/Release/badge.svg)](https://github.com/dotjoshrc/easy-params/actions?query=workflow%3ARelease)
 
 # Easy SSM Parameters
 
@@ -14,14 +14,14 @@ parameters in AWS SSM.
 
 ## Installation
 
-You can check out the [releases page](https://github.com/technicallyjosh/easy-params/releases).
+You can check out the [releases page](https://github.com/dotjoshrc/easy-params/releases).
 
 ### OSX
 
 #### Homebrew
 
 ```console
-$ brew tap technicallyjosh/easy-params
+$ brew tap dotjoshrc/tap
 $ brew install easy-params
 ```
 

@@ -1,6 +1,6 @@
 package main
 
-import "github.com/technicallyjosh/easy-params/cmd"
+import "github.com/dotjoshrc/easy-params/cmd"
 
 func main() {
 	cmd.Execute()
