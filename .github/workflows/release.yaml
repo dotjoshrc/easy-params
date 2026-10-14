@@ -7,19 +7,23 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: goreleaser
+    permissions:
+      contents: write
+      packages: write
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-go@v5
-        with:
-          go-version: "^1.22.0"
-      - name: Release via goreleaser
-        uses: goreleaser/goreleaser-action@v6
-        with:
-          distribution: goreleaser
-          version: '~> v2'
-          args: release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          HOMEBREW_TAP_GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        fetch-depth: 0
+    - name: Install mise
+      uses: jdx/mise-action@08ae2a091c038e1e05ec6f5115dc5c69d5a2a6b8 # v5.1.2
+      with:
+        install_args: go
+    - name: Release via goreleaser
+      uses: goreleaser/goreleaser-action@a4f02ab5355a589de60d917a659ce617ed19b3de # v7.3.0
+      with:
+        distribution: goreleaser
+        version: '~> v2'
+        args: release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        HOMEBREW_TAP_GITHUB_TOKEN: ${{ secrets.GH_PAT }}

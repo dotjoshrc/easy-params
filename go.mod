@@ -1,6 +1,6 @@
 module github.com/dotjoshrc/easy-params
 
-go 1.22
+go 1.27
 
 require (
 	github.com/atotto/clipboard v0.1.4
