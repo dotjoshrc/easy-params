@@ -18,17 +18,3 @@ changelog:
     exclude:
       - "^docs:"
       - "^test:"
-homebrew_casks:
-  - repository:
-      owner: dotjoshrc
-      name: homebrew-tap
-      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
-    directory: Casks
-    description: Opinionated CLI for easy management of SSM Parameters.
-    homepage: https://github.com/dotjoshrc/easy-params
-    hooks:
-      post:
-        install: |
-          if OS.mac?
-            system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/easy-params"]
-          end

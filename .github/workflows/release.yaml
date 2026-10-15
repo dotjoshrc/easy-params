@@ -18,6 +18,18 @@ jobs:
       uses: jdx/mise-action@08ae2a091c038e1e05ec6f5115dc5c69d5a2a6b8 # v5.1.2
       with:
         install_args: go
+    - name: Check stable release tag
+      env:
+        RELEASE_TAG: ${{ github.ref_name }}
+      run: '[[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]'
+    - name: Check out Homebrew tap
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        repository: dotjoshrc/homebrew-tap
+        token: ${{ secrets.GH_PAT }}
+        path: homebrew-tap
+    - name: Exclude tap checkout from release source tree
+      run: echo '/homebrew-tap/' >> .git/info/exclude
     - name: Release via goreleaser
       uses: goreleaser/goreleaser-action@a4f02ab5355a589de60d917a659ce617ed19b3de # v7.3.0
       with:
@@ -26,4 +38,18 @@ jobs:
         args: release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        HOMEBREW_TAP_GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+    - name: Generate and publish Homebrew formula
+      env:
+        RELEASE_TAG: ${{ github.ref_name }}
+      run: |
+        mkdir -p homebrew-tap/Formula
+        go run ./scripts/homebrew-formula \
+          --repository "$GITHUB_REPOSITORY" \
+          --tag "$RELEASE_TAG" > homebrew-tap/Formula/easy-params.rb
+        git -C homebrew-tap config user.name 'github-actions[bot]'
+        git -C homebrew-tap config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+        git -C homebrew-tap add Formula/easy-params.rb
+        if ! git -C homebrew-tap diff --cached --quiet; then
+          git -C homebrew-tap commit -m "Update easy-params to $RELEASE_TAG"
+          git -C homebrew-tap push
+        fi
